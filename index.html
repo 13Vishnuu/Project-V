@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roche Site IT Support Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; transition: background-color 0.5s ease; }
+        .fade-in { animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .roche-blue { color: #0066CC; }
+        .glass-card { background: white; border-radius: 2rem; border: 1px solid #e2e8f0; box-shadow: 0 10px 30px -5px rgba(0,0,0,0.04); }
+        .img-box { border-radius: 1.5rem; overflow: hidden; border: 1px solid #e2e8f0; background-color: #f1f5f9; }
+        .bg-default { background-color: #f8fafc; }
+        .bg-troubleshoot { background-color: #f0f7ff; }
+        .bg-success { background-color: #f0fdf4; }
+        .bg-warning { background-color: #fffaf0; }
+        .nav-btn { transition: all 0.3s ease; height: 100%; }
+        .nav-btn:hover { transform: translateY(-5px); border-color: #0066CC; }
+        
+        .bulb-pulse { animation: pulse-yellow 2s infinite; }
+        @keyframes pulse-yellow { 0%, 100% { color: #facc15; } 50% { color: #eab308; transform: scale(1.1); } }
+    </style>
+</head>
+<body class="text-slate-800 bg-default">
+
+    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-8 py-5 flex justify-between items-center">
+            <div id="logo-container" class="flex items-center space-x-4 select-none">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Hoffmann-La_Roche_logo.svg" alt="Roche Logo" class="h-7 w-auto pointer-events-none">
+                <div class="h-6 w-[1px] bg-slate-300"></div>
+                <h1 class="text-xl font-extrabold roche-blue tracking-tight uppercase">SITE IT</h1>
+            </div>
+            
+            <div class="hidden md:flex flex-1 max-w-md mx-10">
+                <div class="relative w-full">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">🔍</span>
+                    <input type="text" id="searchInput" onkeypress="handleSearch(event)" placeholder="Search (e.g. 'monitor' or 'charge')..." class="w-full bg-slate-50 border border-slate-200 rounded-full py-2 pl-10 pr-4 text-sm focus:outline-none focus:border-blue-500 transition-all">
+                </div>
+            </div>
+
+            <button id="home-nav-btn" onclick="location.reload()" class="hidden text-sm font-extrabold text-slate-700 hover:text-blue-700 px-6 py-2 rounded-full border-2 border-slate-400 bg-white hover:border-blue-600 transition-all shadow-md active:scale-95">
+                HomePage
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto p-8 pt-12 pb-20">
+        
+        <div id="step-start" class="fade-in">
+            <div class="flex flex-col lg:flex-row gap-12">
+                <div class="flex-1 space-y-12">
+                    <div class="text-left">
+                        <h2 class="text-6xl font-black text-slate-900 tracking-tighter mb-4">Support Dashboard</h2>
+                        <p class="text-slate-500 text-xl font-medium max-w-2xl">Fast-track solutions for your workstation hardware.</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <button onclick="showStep('monitor-power', 'step-start', 'bg-troubleshoot')" class="nav-btn flex flex-col p-10 glass-card text-left group">
+                            <div class="w-16 h-16 bg-blue-50 rounded-3xl flex items-center justify-center text-4xl mb-8 shadow-inner group-hover:scale-110 transition-transform">🖥️</div>
+                            <h3 class="font-bold text-2xl text-slate-800 mb-2">Monitor is OFF</h3>
+                            <p class="text-slate-500">No power or lights on your screen.</p>
+                        </button>
+
+                        <button onclick="showStep('laptop-charging', 'step-start', 'bg-troubleshoot')" class="nav-btn flex flex-col p-10 glass-card text-left group">
+                            <div class="w-16 h-16 bg-orange-50 rounded-3xl flex items-center justify-center text-4xl mb-8 shadow-inner group-hover:scale-110 transition-transform">🔌</div>
+                            <h3 class="font-bold text-2xl text-slate-800 mb-2">Laptop Not Charging</h3>
+                            <p class="text-slate-500">Connected to the usb-c docking, but it is not charging.</p>
+                        </button>
+
+                        <button onclick="showStep('no-display', 'step-start', 'bg-troubleshoot')" class="nav-btn flex flex-col p-10 glass-card text-left group">
+                            <div class="w-16 h-16 bg-purple-50 rounded-2xl flex items-center justify-center text-4xl mb-8 shadow-inner group-hover:scale-110 transition-transform">📡</div>
+                            <h3 class="font-bold text-2xl text-slate-800 mb-2">No Signal</h3>
+                            <p class="text-slate-500">Screen is on, but it says "Inactive".</p>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="lg:w-80 space-y-6">
+                    <div class="bg-blue-900 text-white p-10 rounded-[2.5rem] shadow-xl relative overflow-hidden h-full flex flex-col justify-center">
+                        <div class="relative z-10">
+                            <div class="bulb-pulse text-4xl mb-6">💡</div>
+                            <h4 class="font-black uppercase text-xs tracking-widest mb-4 opacity-70">Did You Know?</h4>
+                            <p class="text-xl font-bold leading-tight italic">"Restarting will solve most device and software/application issues!"</p>
+                        </div>
+                        <div class="absolute -bottom-6 -right-6 text-white opacity-10 text-9xl font-black">?</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="monitor-power" class="hidden fade-in space-y-8">
+            <button onclick="goBack('bg-default')" class="text-sm font-bold text-blue-900 flex items-center px-4 py-2 rounded-lg hover:bg-white transition-all w-fit">← Back</button>
+            <div class="glass-card p-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="space-y-6">
+                    <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-md text-[10px] font-black mb-4 uppercase tracking-tighter">Check Point 1</span>
+                    <h3 class="text-4xl font-black tracking-tight">Check Behind the Screen</h3>
+                    <p class="text-slate-600 text-lg leading-relaxed">Most Roche monitors have a power switch hidden on the back. Reach behind the <strong>bottom-right corner</strong> to find for these switches.</p>
+                    <div class="flex gap-4 pt-8 border-t border-slate-100">
+                        <button onclick="markResolved()" class="flex-1 bg-emerald-600 text-white py-5 rounded-2xl font-black shadow-lg hover:bg-emerald-700 transition-all text-lg">It worked!</button>
+                        <button onclick="showStep('check-extension', 'monitor-power', 'bg-troubleshoot')" class="flex-1 bg-slate-900 text-white py-5 rounded-2xl font-black hover:bg-slate-800 transition-all text-lg">No light yet</button>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 h-80">
+                    <div class="img-box"><img src="monitor1.jpg" class="w-full h-full object-cover"></div>
+                    <div class="img-box"><img src="monitor2.jpg" class="w-full h-full object-cover"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="laptop-charging" class="hidden fade-in space-y-8">
+            <button onclick="goBack('bg-default')" class="text-sm font-bold text-blue-900 flex items-center px-4 py-2 rounded-lg hover:bg-white transition-all w-fit">← Back</button>
+            <div class="glass-card p-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="space-y-6">
+                    <h3 class="text-3xl font-bold mb-4">Is the Dock Light On?</h3>
+                    <p class="text-slate-600 text-lg leading-relaxed">Look at your HP USB-C Docking. Check for a small white light on the power button.</p>
+                    <div class="flex gap-4 pt-8 border-t border-slate-100">
+                        <button onclick="showStep('hard-reset', 'laptop-charging', 'bg-troubleshoot')" class="flex-1 bg-blue-600 text-white py-5 rounded-2xl font-black shadow-lg hover:bg-blue-700 transition-all text-lg">Light is ON</button>
+                        <button onclick="showStep('check-extension', 'laptop-charging', 'bg-troubleshoot')" class="flex-1 bg-slate-200 text-slate-700 py-5 rounded-2xl font-black transition-all text-lg">Light is OFF</button>
+                    </div>
+                </div>
+                <div class="img-box h-96 shadow-2xl"><img src="dock.jpg" class="w-full h-full object-cover"></div>
+            </div>
+        </div>
+
+        <div id="check-extension" class="hidden fade-in space-y-8 text-center max-w-2xl mx-auto">
+            <button onclick="goBack()" class="mb-4 text-blue-900 font-bold block">← Back</button>
+            <div class="glass-card p-12">
+                <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-md text-[10px] font-black mb-4 uppercase tracking-tighter">Check Point 2</span>
+                <h3 class="text-2xl font-bold mb-8">Check the Power Box</h3>
+                <div class="img-box h-64 mb-8"><img src="power.jpg" class="w-full h-full object-cover"></div>
+                <p class="text-slate-600 mb-6 font-medium leading-relaxed text-sm">Look for the power extension box mounted under your desk. Ensure the small switch is turned <strong>ON</strong>.</p>
+                <div class="flex gap-4">
+                    <button onclick="showStep('extension-on-fail', 'check-extension')" class="flex-1 border-2 border-blue-900 py-4 font-bold rounded-xl">It's already ON</button>
+                    <button onclick="showStep('extension-fix', 'check-extension', 'bg-troubleshoot')" class="flex-1 bg-blue-900 text-white py-4 font-bold rounded-xl">It was OFF</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="ticket-ofm" class="hidden fade-in space-y-8">
+            <button onclick="goBack('bg-troubleshoot')" class="text-sm font-bold text-blue-900 flex items-center px-4 py-2 rounded-lg hover:bg-white transition-all w-fit">← Back</button>
+            <div class="text-center py-20 px-8 glass-card border-t-8 border-orange-500">
+                <div class="w-20 h-20 bg-orange-50 rounded-full flex items-center justify-center text-4xl mx-auto mb-6 shadow-inner text-orange-600">⚡</div>
+                <h3 class="text-4xl font-black mb-3 text-orange-600">Power Issue Detected</h3>
+                <p class="text-slate-500 mb-10 text-lg max-w-xl mx-auto font-medium">The under-desk socket isn't providing power. Facilities needs to check the electrical line.</p>
+                <button onclick="openPortal('https://roche.service-now.com/siteservices?id=wsd_sc_cat_item&sys_id=24d5f2b01bba709ce75541588b4bcb4c&sysparm_category=dd906a781bbe781879be1f4aab4bcb6b')" class="inline-block bg-orange-600 text-white px-14 py-6 rounded-3xl font-black shadow-2xl hover:scale-105 transition-all text-xl">Raise OFM Ticket</button>
+            </div>
+        </div>
+
+        <div id="ticket-onsite" class="hidden fade-in space-y-8">
+            <button onclick="goBack('bg-troubleshoot')" class="text-sm font-bold text-blue-900 flex items-center px-4 py-2 rounded-lg hover:bg-white transition-all w-fit">← Back</button>
+            <div class="text-center py-20 px-8 glass-card">
+                <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center text-4xl mx-auto mb-6 shadow-inner">🔧</div>
+                <h3 class="text-4xl font-black mb-3">Professional Help Needed</h3>
+                <p class="text-slate-500 mb-10 text-lg max-w-xl mx-auto font-medium">Thank you for checking. Since the basics didn't work, let's get an OnSite IT Support technician to visit your desk.</p>
+                <button onclick="openPortal('https://roche.service-now.com/siteservices?id=wsd_sc_cat_item&sys_id=1fba15a487f81258084f41140cbb3534')" class="bg-blue-600 text-white px-14 py-6 rounded-3xl font-black shadow-2xl hover:scale-105 transition-all text-xl">Raise IT Ticket</button>
+            </div>
+        </div>
+
+        <div id="solved" class="hidden fade-in text-center py-24 px-8 glass-card border-t-8 border-emerald-500">
+            <div class="w-24 h-24 bg-emerald-50 rounded-full flex items-center justify-center text-5xl mx-auto mb-8 animate-bounce shadow-inner">✅</div>
+            <h3 class="text-5xl font-black mb-4 text-emerald-700 tracking-tight">Resolved!</h3>
+            <p class="text-xl text-slate-500 mb-12 font-medium italic">Thank you for using the self-help hub.</p>
+            <button onclick="location.reload()" class="text-blue-600 font-black hover:underline text-lg">Back to HomePage</button>
+        </div>
+
+        <div id="hard-reset" class="hidden fade-in glass-card p-12 max-w-2xl mx-auto text-center">
+            <button onclick="goBack()" class="mb-4 text-blue-900 font-bold block">← Back</button>
+            <h3 class="text-2xl font-bold mb-6 text-blue-600 tracking-tight">The Quick Fix.</h3>
+            <p class="text-slate-600 mb-8 font-medium text-sm">This is to check if the issue lies within the laptop or the type-c cable of the docking.</p>
+            <div class="space-y-4 mb-8">
+                <p class="p-4 bg-slate-50 rounded-xl font-bold">1. Unplug the main cable from your laptop.</p>
+                <p class="p-4 bg-slate-50 rounded-xl font-bold">2. Hold the laptop Power Button for 30 seconds.</p>
+                <p class="p-4 bg-slate-50 rounded-xl font-bold">3. Turn it back ON and plug the cable in.</p>
+            </div>
+            <div class="flex gap-4">
+                <button onclick="markResolved()" class="flex-1 bg-emerald-600 text-white py-4 rounded-xl font-bold">It worked!</button>
+                <button onclick="showStep('ticket-onsite', 'hard-reset')" class="flex-1 bg-slate-100 py-4 rounded-xl font-bold">Still nothing</button>
+            </div>
+        </div>
+        
+        <div id="no-display" class="hidden fade-in glass-card p-12 text-center max-w-2xl mx-auto"><button onclick="goBack()" class="mb-4 text-blue-900 font-bold block">← Back</button><h3 class="text-2xl font-bold mb-4 uppercase">Quick Cable Check</h3><p class="text-slate-600 mb-8 font-medium leading-relaxed text-sm">Visually check if the cables at the back of the monitor are loose. If they look fine but the screen is blank, click below.</p><button onclick="showStep('ticket-onsite', 'no-display')" class="w-full bg-slate-900 text-white py-5 rounded-2xl font-black">Still Inactive</button></div>
+        
+        <div id="extension-on-fail" class="hidden fade-in glass-card p-12 text-center max-w-2xl mx-auto"><button onclick="goBack()" class="mb-4 text-blue-900 font-bold block">← Back</button><h3 class="text-2xl font-bold mb-4 uppercase">Loose Cable Check</h3><p class="text-slate-600 mb-8 font-medium italic text-sm">Visually check if the cables at the back of the monitor or the docking are loose.</p><div class="flex gap-4"><button onclick="markResolved()" class="flex-1 bg-emerald-600 text-white py-5 rounded-2xl font-black">It's working!</button><button onclick="showStep('ticket-onsite', 'extension-on-fail')" class="flex-1 bg-slate-800 text-white py-5 rounded-2xl font-black">Still dead</button></div></div>
+        
+        <div id="extension-fix" class="hidden fade-in glass-card p-12 text-center max-w-2xl mx-auto"><button onclick="goBack()" class="mb-4 text-blue-900 font-bold block">← Back</button><p class="mb-10 text-2xl font-black">Switch flipped! Does everything turn on now?</p><div class="flex gap-4"><button onclick="markResolved()" class="flex-1 bg-emerald-600 text-white py-5 rounded-2xl font-black shadow-md">Yes</button><button onclick="showStep('ticket-ofm', 'extension-fix', 'bg-warning')" class="flex-1 bg-red-50 text-red-600 py-5 rounded-2xl font-black border border-red-100 shadow-md">No</button></div></div>
+
+    </main>
+
+    <footer class="text-center text-slate-400 text-[10px] font-black uppercase tracking-widest py-10">
+        <p>© 2026 Roche Site IT | Professional Support Hub</p>
+    </footer>
+
+    <script>
+        // --- DATABASE CONFIGURATION ---
+        const DATABASE_URL = "YOUR_WEB_APP_URL_HERE"; 
+
+        let historyStack = [];
+        const homeBtn = document.getElementById('home-nav-btn');
+
+        function handleSearch(e) {
+            if (e.key === 'Enter') {
+                const val = e.target.value.toLowerCase();
+                if (val.includes('monitor') || val.includes('screen') || val.includes('off')) {
+                    showStep('monitor-power', 'step-start', 'bg-troubleshoot');
+                } else if (val.includes('charge') || val.includes('laptop') || val.includes('dock')) {
+                    showStep('laptop-charging', 'step-start', 'bg-troubleshoot');
+                } else if (val.includes('signal') || val.includes('inactive')) {
+                    showStep('no-display', 'step-start', 'bg-troubleshoot');
+                } else {
+                    alert('No matching topic found.');
+                }
+                e.target.value = '';
+            }
+        }
+
+        function markResolved() {
+            // Update Local Storage 
+            let count = parseInt(localStorage.getItem('ticketsSaved') || 0);
+            count++;
+            localStorage.setItem('ticketsSaved', count);
+
+            // Log resolution to your Centralized Google Sheet
+            if (DATABASE_URL !== "https://script.google.com/a/macros/roche.com/s/AKfycbwQr5wLluLzC6pEU_WtAmyHxkOS82DYERi0Ia2Uo571CvwdKgpnNXZGF10kUEVi0H4a/exec") {
+                fetch(DATABASE_URL)
+                    .then(() => console.log("Resolution logged to central dashboard."))
+                    .catch(() => console.warn("Network offline or URL incorrect."));
+            }
+
+            // Move to Success Screen
+            showStep('solved', '', 'bg-success');
+        }
+
+        function openPortal(url) {
+            const link = document.createElement('a');
+            link.href = url;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function showStep(stepId, currentId, bgColor) {
+            const target = document.getElementById(stepId);
+            if (target) {
+                if (currentId) historyStack.push({id: currentId, bg: document.body.className.split(' ').pop()});
+                
+                if (stepId === 'step-start') homeBtn.classList.add('hidden');
+                else homeBtn.classList.remove('hidden');
+
+                document.body.className = "text-slate-800 " + (bgColor || "bg-default");
+                document.querySelectorAll('main > div').forEach(div => div.classList.add('hidden'));
+                target.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function goBack() {
+            if (historyStack.length > 0) {
+                const prev = historyStack.pop();
+                
+                if (prev.id === 'step-start') homeBtn.classList.add('hidden');
+                else homeBtn.classList.remove('hidden');
+
+                document.body.className = "text-slate-800 " + (prev.bg || "bg-default");
+                document.querySelectorAll('main > div').forEach(div => div.classList.add('hidden'));
+                document.getElementById(prev.id).classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+    </script>
+</body>
+</html>
