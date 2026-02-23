@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roche Site IT Support Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; transition: background-color 0.5s ease; }
+        .fade-in { animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .roche-blue { color: #0066CC; }
+        .glass-card { background: white; border-radius: 2rem; border: 1px solid #e2e8f0; box-shadow: 0 10px 30px -5px rgba(0,0,0,0.04); }
+        .img-box { border-radius: 1.5rem; overflow: hidden; border: 1px solid #e2e8f0; background-color: #f1f5f9; }
+        .bg-default { background-color: #f8fafc; }
+        .bg-troubleshoot { background-color: #f0f7ff; }
+        .bg-success { background-color: #f0fdf4; }
+        .bg-warning { background-color: #fffaf0; }
+
+        /* MODIFIED CSS FOR BUTTON EFFECTS */
+        button { transition: all 0.2s ease !important; }
+        button:hover { transform: scale(1.03); filter: brightness(1.05); }
+        button:active { transform: scale(0.97); }
+
+        .nav-btn { transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); height: 100%; }
+        .nav-btn:hover { transform: translateY(-8px) scale(1.05) !important; border-color: #0066CC; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .nav-btn:active { transform: scale(0.98); }
+        
+        .bulb-pulse { animation: pulse-yellow 2s infinite; }
+        @keyframes pulse-yellow { 0%, 100% { color: #facc15; } 50% { color: #eab308; transform: scale(1.1); } }
+    </style>
+</head>
+<body class="text-slate-800 bg-default">
+    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-8 py-5 flex justify-between items-center">
+            <div id="logo-container" class="flex items-center space-x-4 select-none">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Hoffmann-La_Roche_logo.svg" alt="Roche Logo" class="h-7 w-auto pointer-events-none">
+                <div class="h-6 w-[1px] bg-slate-300"></div>
+                <h1 class="text-2xl font-extrabold roche-blue tracking-tight uppercase">SITE IT</h1>
+            </div>
+            <div class="hidden md:flex flex-1 max-w-md mx-10">
+                <div class="relative w-full">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">🔍</span>
+                    <input type="text" id="searchInput" onkeypress="handleSearch(event)" placeholder="Search keywords..." class="w-full bg-slate-50 border border-slate-200 rounded-full py-2 pl-10 pr-4 text-sm focus:outline-none focus:border-blue-500 transition-all">
+                </div>
+            </div>
+            <button id="home-nav-btn" onclick="location.reload()" class="hidden text-sm font-extrabold text-slate-700 hover:text-blue-700 px-6 py-2 rounded-full border-2 border-slate-400 bg-white hover:border-blue-600 transition-all shadow-md active:scale-95">
+                HomePage
+            </button>
+        </div>
+    </header>
+    <main class="max-w-7xl mx-auto p-8 pt-12 pb-20">
+        <div id="step-start" class="fade-in">
+            <div class="flex flex-col lg:flex-row gap-12">
+                <div class="flex-1 space-y-12">
+                    <div class="text-left">
+                        <h2 class="text-6xl font-black text-slate-900 tracking-tighter mb-4">Support Dashboard</h2>
+                        <p class="text-slate-500 text-xl mb-20 font-medium max-w-2xl italic">Fast-track solutions for your workstation hardware.</p>
+                        <h3 class="text-slate-10000 text-4xl font-extrabold tracking-tight fade-in">Welcome! What are the challenges you're facing today?</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <button onclick="showStep('monitor-led-check', 'step-start', 'bg-troubleshoot')" class="nav-btn flex flex-col p-10 glass-card text-left group">
+                            <div class="w-16 h-16 bg-blue-50 rounded-3xl flex items-center justify-center text-4xl mb-8 shadow-inner group-hover:scale-110 transition-transform">🖥️</div>
+                            <h3 class="font-bold text-2xl text-slate-800 mb-2">Monitor is OFF</h3>
+                            <p class="text-slate-500">No power or lights on your screen.</p>
+                        </button>
+                        <button onclick="showStep('laptop-charging', 'step-start', 'bg-troubleshoot')" class="nav-btn flex flex-col p-10 glass-card text-left group">
+                            <div class="w-16 h-16 bg-orange-50 rounded-3xl flex items-center justify-center text-4xl mb-8 shadow-inner group-hover:scale-110 transition-transform">🔌</div>
+                            <h3 class="font-bold text-2xl text-slate-800 mb-2">Laptop Not Charging</h3>
+                            <p class="text-slate-500">Connected to the usb-c docking, but it is not charging.</p>
+                        </button>
+                        <button onclick="showStep('no-display', 'step-start', 'bg-troubleshoot')" class="nav-btn flex flex-col p-10 glass-card text-left group">
+                            <div class="w-16 h-16 bg-purple-50 rounded-2xl flex items-center justify-center text-4xl mb-8 shadow-inner group-hover:scale-110 transition-transform">📡</div>
+                            <h3 class="font-bold text-2xl text-slate-800 mb-2">No Signal</h3>
+                            <p class="text-slate-500">Screen is on, but it says "Inactive".</p>
+                        </button>
+                        <button onclick="showStep('meeting-room', 'step-start', 'bg-troubleshoot')" class="nav-btn flex flex-col p-10 glass-card text-left group border-2 border-blue-100">
+                            <div class="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center text-4xl mb-8 shadow-inner group-hover:scale-110 transition-transform">📺</div>
+                            <h3 class="font-bold text-2xl text-slate-800 mb-2">Meeting Room</h3>
+                            <p class="text-slate-500">TV/Display, Camera, or Audio/Mic issues.</p>
+                        </button>
+                    </div>
+                </div>
+                <div class="lg:w-80 space-y-6">
+                    <div class="bg-blue-900 text-white p-10 rounded-[2.5rem] shadow-xl relative overflow-hidden h-full flex flex-col justify-center">
+                        <div class="relative z-10">
+                            <div class="bulb-pulse text-4xl mb-6">💡</div>
+                            <h4 class="font-black uppercase text-xs tracking-widest mb-4 opacity-70">Did You Know?</h4>
+                            <p class="text-xl font-bold leading-tight italic">"Restarting will solve most device and software/application issues!"</p>
+                        </div>
+                        <div class="absolute -bottom-6 -right-6 text-white opacity-10 text-9xl font-black">?</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="monitor-led-check" class="hidden fade-in space-y-8">
+            <button onclick="goBack()" class="text-sm font-bold text-blue-900 flex items-center px-4 py-2 rounded-lg hover:bg-white transition-all w-fit">← Back</button>
+            <div class="glass-card p-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="space-y-6 text-left">
+                    <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-md text-[10px] font-black mb-4 uppercase tracking-tighter">Check Point 1</span>
+                    <h3 class="text-4xl font-black tracking-tight">Check Monitor LED</h3>
+                    <p class="text-slate-600 text-lg leading-relaxed">Look at the <strong>bottom corner</strong> of your monitor. Ensure there's light by clicking on the power button which sits right under the <strong>bottom surface</strong> of the monitor.</p>
+                    <div class="flex gap-4 pt-8 border-t border-slate-100">
+                        <button onclick="markResolved()" class="flex-1 bg-emerald-600 text-white py-5 rounded-2xl font-black shadow-lg hover:bg-emerald-700 transition-all text-lg">Clicked and turned it ON</button>
+                        <button onclick="showStep('monitor-power', 'monitor-led-check', 'bg-troubleshoot')" class="flex-1 bg-slate-900 text-white py-5 rounded-2xl font-black hover:bg-slate-800 transition-all text-lg">Clicked but no light visible</button>
+                    </div>
+                </div>
+                <div class="img-box w-[492px] h-[500px] shadow-2xl"><img src="monitor-led.jpg" class="w-full h-full object-contain"></div>
+            </div>
+        </div>
+        <div id="monitor-power" class="hidden fade-in space-y-8 text-left">
+            <button onclick="goBack()" class="text-sm font-bold text-blue-900 flex items-center px-4 py-2 rounded-lg hover:bg-white transition-all w-fit">← Back</button>
+            <div class="glass-card p-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="space-y-6">
+                    <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-md text-[10px] font-black mb-4 uppercase tracking-tighter">Check Point 2</span>
+                    <h3 class="text-4xl font-black tracking-tight">Check Behind the Screen</h3>
+                    <p class="text-slate-600 text-lg leading-relaxed">Most Roche monitors have a power switch hidden on the back. Reach behind the <strong>bottom-right corner</strong> to find for these switches.</p>
+                    <div class="flex gap-4 pt-8 border-t border-slate-100">
+                        <button onclick="markResolved()" class="flex-1 bg-emerald-600 text-white py-5 rounded-2xl font-black shadow-lg hover:bg-emerald-700 transition-all text-lg">It worked!</button>
+                        <button onclick="showStep('check-extension', 'monitor-power', 'bg-troubleshoot')" class="flex-1 bg-slate-900 text-white py-5 rounded-2xl font-black hover:bg-slate-800 transition-all text-lg">No light yet</button>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 h-80">
+                    <div class="img-box"><img src="monitor1.jpg" class="w-full h-full object-cover"></div>
+                    <div class="img-box"><img src="monitor2.jpg" class="w-full h-full object-cover"></div>
+                </div>
+            </div>
+        </div>
+        <div id="laptop-charging" class="hidden fade-in space-y-8 text-left">
+            <button onclick="goBack()" class="text-sm font-bold text-blue-900 flex items-center px-4 py-2 rounded-lg hover:bg-white transition-all w-fit">← Back</button>
+            <div class="glass-card p-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="space-y-6">
+                    <h3 class="text-4xl font-black mb-3 text-black-600 text-center">Is the Dock Light On?</h3>
+                    <p class="text-slate-600 text-lg leading-relaxed">Look at your HP USB-C Docking. Check for a small white light on the power button.</p>
+                    <div class="flex gap-4 pt-8 border-t border-slate-100">
+                        <button onclick="showStep('hard-reset', 'laptop-charging', 'bg-troubleshoot')" class="flex-1 bg-blue-600 text-white py-5 rounded-2xl font-black shadow-lg hover:bg-blue-700 transition-all text-lg">Light is ON</button>
+                        <button onclick="showStep('check-extension', 'laptop-charging', 'bg-troubleshoot')" class="flex-1 bg-slate-200 text-slate-700 py-5 rounded-2xl font-black transition-all text-lg">Light is OFF</button>
+                    </div>
+                </div>
+                <div class="img-box h-96 shadow-2xl"><img src="dock.jpg" class="w-full h-full object-cover"></div>
+            </div>
+        </div>
+        <div id="meeting-room" class="hidden fade-in space-y-8 text-left">
+            <button onclick="goBack()" class="text-sm font-bold text-blue-900 flex items-center px-4 py-2 rounded-lg hover:bg-white transition-all w-fit">← Back</button>
+            <div class="glass-card p-12">
+                <h3 class="text-4xl font-black tracking-tight mb-8 text-center">Meeting Room Support</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <button onclick="showStep('mr-no-signal', 'meeting-room')" class="p-8 border-2 border-slate-100 rounded-3xl hover:border-blue-500 hover:bg-blue-50/50 transition-all group">
+                        <span class="text-4xl mb-4 block">📡</span>
+                        <h4 class="font-bold text-xl mb-2">TV Shows "No Signal"</h4>
+                        <p class="text-slate-500 text-sm">TV is ON, but the display is not being extended from the laptop screen.</p>
+                    </button>
+                    <button onclick="showStep('mr-no-power', 'meeting-room')" class="p-8 border-2 border-slate-100 rounded-3xl hover:border-blue-500 hover:bg-blue-50/50 transition-all group">
+                        <span class="text-4xl mb-4 block">🔌</span>
+                        <h4 class="font-bold text-xl mb-2">TV Cannot Turn On</h4>
+                        <p class="text-slate-500 text-sm">Screen is black although tried turning on using the remote and/or manually.</p>
+                    </button>
+                    <button onclick="showStep('mr-audio-mic-choice', 'meeting-room')" class="p-8 border-2 border-slate-100 rounded-3xl hover:border-blue-500 hover:bg-blue-50/50 transition-all group">
+                        <span class="text-4xl mb-4 block">🔊</span>
+                        <h4 class="font-bold text-xl mb-2">Audio/Mic Issue</h4>
+                        <p class="text-slate-500 text-sm">Problems with sound output or Google Meet microphone.</p>
+                    </button>
+                    <button onclick="showStep('mr-camera-check', 'meeting-room')" class="p-8 border-2 border-slate-100 rounded-3xl hover:border-blue-500 hover:bg-blue-50/50 transition-all group">
+                        <span class="text-4xl mb-4 block">📷</span>
+                        <h4 class="font-bold text-xl mb-2">Camera Issue</h4>
+                        <p class="text-slate-500 text-sm">Only displaying laptop camera, not from the Poly Device.</p>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mr-no-signal" class="hidden fade-in space-y-8 text-left">
+            <button onclick="goBack()" class="text-sm font-bold text-blue-900 flex items-center px-4 py-2 rounded-lg hover:bg-white transition-all w-fit">← Back</button>
+            <div class="glass-card p-12">
+                <h3 class="text-4xl font-black tracking-tight mb-8">Troubleshooting: No Signal.</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 items-stretch">
+    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col">
+        <div class="img-box w-63 h-59 mb-4 mx-auto flex items-center justify-center">
+            <img src="dock.jpg" class="max-w-full max-h-full object-contain">
+        </div>
+        <div class="mt-auto">
+            <h4 class="font-bold mb-2 text-2xl text-center">1. Docking Light</h4>
+            <p class="text-[14px] text-slate-500 text-center">Verify that the white light is ON.</p>
+        </div>
+    </div>
+
+    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col">
+        <div class="img-box w-63 h-64 mb-4 mx-auto flex items-center justify-center">
+            <img src="dock-cable.jpg" class="max-w-full max-h-full object-contain">
+        </div>
+        <div class="mt-auto">
+            <h4 class="font-bold mb-2 text-2xl text-center">2. Display Cables</h4>
+            <p class="text-[14px] text-slate-500 text-center">Ensure the cables are seated firmly.</p>
+        </div>
+    </div>
+
+    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col">
+        <div class="img-box w-63 h-64 mb-4 mx-auto flex items-center justify-center">
+            <img src="mr-main switches.jpg" class="max-w-full max-h-full object-contain">
+        </div>
+        <div class="mt-auto">
+            <h4 class="font-bold mb-2 text-2xl text-center">3. Restart Power</h4>
+            <p class="text-[14px] text-slate-500 text-center">Try to turn off all the wall switches and turn them back on after a few seconds.</p>
+        </div>
+    </div>
+</div>
+                <div class="flex gap-4 border-t pt-8">
+                    <button onclick="markResolved()" class="flex-1 bg-emerald-600 text-white py-4 rounded-xl font-bold">Fixed!</button>
+                    <button onclick="showStep('ticket-onsite', 'mr-no-signal')" class="flex-1 bg-slate-900 text-white py-4 rounded-xl font-bold">Still No Signal</button>
+                </div>
+            </div>
+        </div>
+        <div id="mr-no-power" class="hidden fade-in space-y-8 text-left">
+            <button onclick="goBack()" class="text-sm font-bold text-blue-900 flex items-center px-4 py-2 rounded-lg hover:bg-white transition-all w-fit">← Back</button>
+            <div class="glass-card p-12">
+                <h3 class="text-4xl font-black tracking-tight mb-8">Troubleshooting: TV Power</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 items-stretch">
+                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col">
+                        <div class="img-box w-63 h-70 mb-4 mx-auto flex items-center justify-center"><img src="mr-tv light.jpg" class="max-w-full max-h-full object-contain"></div>
+                        <div class="mt-auto"></div>
+                        <h4 class="font-bold mb-2 text-2xl">1. TV LED</h4><p class="text-[14px] text-slate-500">Check TV light (LED).</p>
+                    </div>
+                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col">
+                        <div class="img-box w-63 h-59 mb-4 mx-auto flex items-center justify-center"><img src="mr-main switches.jpg" class="max-w-full max-h-full object-contain"></div>
+                        <h4 class="font-bold mb-2 text-2xl">2. Wall Switch</h4><p class="text-[14px] text-slate-500">Verify that all wall switches are ON.</p>
+                    </div>
+                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col">
+                        <div class="img-box w-63 h-59 mb-4 mx-auto flex items-center justify-center"><img src="mr-power switch.jpg" class="max-w-full max-h-full object-contain"></div>
+                        <h4 class="font-bold mb-2 text-2xl">3. Floor Panel</h4><p class="text-[14px] text-slate-500">Verify that all floor switches are ON.</p>
+                    </div>
+                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col">
+                        <div class="img-box w-63 h-59 mb-4 mx-auto flex items-center justify-center"><img src="mr-power socket.jpg" class="max-w-full max-h-full object-contain"></div>
+                        <h4 class="font-bold mb-2 text-2xl">4. Table Socket</h4><p class="text-[14px] text-slate-500">Check table panel to ensure all adapters are firmly plugged in.</p>
+                    </div>
+                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col">
+                        <div class="img-box w-63 h-59 mb-4 mx-auto flex items-center justify-center"><img src="dock.jpg" class="max-w-full max-h-full object-contain"></div>
+                        <h4 class="font-bold mb-2 text-2xl">5. Docking Light</h4><p class="text-[14px] text-slate-500">Verify that the white light is ON.</p>
+                    </div>
+                </div>
+                <div class="flex gap-4 border-t pt-8">
+                    <button onclick="markResolved()" class="flex-1 bg-emerald-600 text-white py-4 rounded-xl font-bold">Resolved</button>
+                    <button onclick="showStep('ticket-onsite', 'mr-no-power')" class="flex-1 bg-slate-900 text-white py-4 rounded-xl font-bold">Still No Power</button>
+                </div>
+            </div>
+        </div>
+        <div id="mr-audio-mic-choice" class="hidden fade-in space-y-8 text-left">
+            <button onclick="goBack()" class="text-sm font-bold text-blue-900 flex items-center px-4 py-2 rounded-lg hover:bg-white transition-all w-fit">← Back</button>
+            <div class="glass-card p-12">
+                <h3 class="text-4xl font-black tracking-tight mb-8">What issue are you currently facing?</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <button onclick="showStep('mr-audio-step1', 'mr-audio-mic-choice')" class="p-10 border-2 border-slate-100 rounded-3xl hover:border-blue-600 transition-all text-center group">
+                        <span class="text-5xl mb-6 block">🔊</span>
+                        <h4 class="font-bold text-2xl">Audio Issue</h4>
+                        <p class="text-slate-500 mt-2">Cannot hear background music or voices.</p>
+                    </button>
+                    <button onclick="showStep('mr-mic-only', 'mr-audio-mic-choice')" class="p-10 border-2 border-slate-100 rounded-3xl hover:border-blue-600 transition-all text-center group">
+                        <span class="text-5xl mb-6 block">🎤</span>
+                        <h4 class="font-bold text-2xl">Microphone Issue</h4>
+                        <p class="text-slate-500 mt-2">Others cannot hear you in the meeting.</p>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mr-audio-step1" class="hidden fade-in space-y-8 text-center max-w-2xl mx-auto">
+            <button onclick="goBack()" class="mb-4 text-blue-900 font-bold block w-fit">← Back</button>
+            <div class="glass-card p-12 mt-4">
+                <h3 class="text-4xl font-black mb-2 tracking-tight text-center">Step 1: Sound Settings</h3>
+                <p class="text-slate-600 mb-8 text-m text-center">Click the <strong>Sound Icon</strong> in the taskbar to open quick settings.</p>
+                <div class="img-box w-60 h-68 mb-8 mx-auto flex items-center justify-center"><img src="sound-setting.jpg" class="max-w-full max-h-full object-contain"></div>
+                <button onclick="showStep('mr-audio-step2', 'mr-audio-step1')" class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold">Next Step</button>
+            </div>
+        </div>
+        <div id="mr-audio-step2" class="hidden fade-in space-y-8 text-center max-w-2xl mx-auto">
+            <button onclick="goBack()" class="mb-4 text-blue-900 font-bold block w-fit">← Back</button>
+            <div class="glass-card p-12 mt-4 text-center">
+                <h3 class="text-4xl font-black mb-2 tracking-tight text-center">Step 2: Select Poly</h3>
+                <p class="text-slate-600 mb-8 text-m text-center">Ensure <strong>Polycom Studio Audio</strong> is selected as output.</p>
+                <div class="img-box w-60 h-68 mb-8 mx-auto flex items-center justify-center"><img src="sound-output.jpg" class="max-w-full max-h-full object-contain"></div>
+                <div class="flex gap-4">
+                    <button onclick="markResolved()" class="flex-1 bg-emerald-600 text-white py-4 rounded-xl font-bold">Works now!</button>
+                    <button onclick="showStep('mr-poly-detect', 'mr-audio-step2')" class="flex-1 border-2 border-slate-900 py-4 rounded-xl font-bold">Not in list</button>
+                </div>
+            </div>
+        </div>
+        <div id="mr-mic-only" class="hidden fade-in space-y-8 text-center max-w-2xl mx-auto">
+            <button onclick="goBack()" class="mb-4 text-blue-900 font-bold block w-fit">← Back</button>
+            <div class="glass-card p-12 mt-4 text-center">
+                <h3 class="text-4xl font-black mb-2 tracking-tight text-center">Google Meet Mic Check</h3>
+                <p class="text-slate-600 mb-8 text-m text-center">In Google Meet, ensure Mic is set to <strong>Polycom Studio Audio</strong>.</p>
+                <div class="img-box w-64 h-64 mb-8 mx-auto flex items-center justify-center"><img src="mic-output.jpg" class="max-w-full max-h-full object-contain"></div>
+                <div class="flex gap-4">
+                    <button onclick="markResolved()" class="flex-1 bg-emerald-600 text-white py-4 rounded-xl font-bold">Fixed!</button>
+                    <button onclick="showStep('mr-poly-detect', 'mr-mic-only')" class="flex-1 bg-slate-900 text-white py-4 rounded-xl font-bold">Still failing</button>
+                </div>
+            </div>
+        </div>
+        <div id="mr-camera-check" class="hidden fade-in space-y-8 text-center max-w-2xl mx-auto text-left">
+            <button onclick="goBack()" class="mb-4 text-blue-900 font-bold block w-fit">← Back</button>
+            <div class="glass-card p-12 mt-4 text-center">
+                <h3 class="text-4xl font-black mb-2 tracking-tight text-center">Google Meet Camera Check</h3>
+                <p class="text-slate-600 mb-8 text-m text-center">In Google Meet, ensure Camera is set to <strong>Polycom Studio Audio</strong>.</p>
+                <div class="img-box w-60 h-68 mb-8 mx-auto flex items-center justify-center"><img src="cam-output.jpg" class="max-w-full max-h-full object-contain"></div>
+                <div class="flex gap-4 mt-8">
+                    <button onclick="markResolved()" class="flex-1 bg-emerald-600 text-white py-4 rounded-xl font-bold text-center">Works!</button>
+                    <button onclick="showStep('mr-poly-detect', 'mr-camera-check')" class="flex-1 bg-blue-600 text-white py-4 rounded-xl font-bold text-center">No such output option</button>
+                </div>
+            </div>
+        </div>
+        <div id="mr-poly-detect" class="hidden fade-in space-y-8 text-center max-w-2xl mx-auto">
+            <button onclick="goBack()" class="mb-4 text-blue-900 font-bold block w-fit">← Back</button>
+            <div class="glass-card p-12 mt-4">
+                <h3 class="text-4xl font-black mb-6 tracking-tight text-center">Polycom Light Status</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                    <button onclick="showStep('ticket-onsite', 'mr-poly-detect')" class="p-6 border-2 border-orange-200 rounded-3xl hover:bg-orange-50">
+                        <div class="img-box h-50 mb-4"><img src="mr-polycam(bfr).jpg" class="w-full h-full object-contain"></div>
+                        <h4 class="font-bold text-orange-800">White / Orange</h4>
+                        <p class="text-xs">This indicates that Poly has failed to start properly.</p>
+                    </button>
+                    <button onclick="showStep('ticket-onsite', 'mr-poly-detect')" class="p-6 border-2 border-purple-200 rounded-3xl hover:bg-purple-50">
+                        <div class="img-box h-50 mb-4"><img src="mr-polycam(aft).jpg" class="w-full h-full object-contain"></div>
+                        <h4 class="font-bold text-purple-800">Purple / Blue</h4>
+                        <p class="text-xs">This indicates that Poly has started successfully but it isn't detecting your device.</p>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mr-poly-purple" class="hidden fade-in space-y-8 text-center max-w-2xl mx-auto text-left">
+            <button onclick="goBack()" class="mb-4 text-blue-900 font-bold block w-fit">← Back</button>
+            <div class="glass-card p-12 mt-4 text-center">
+                <h3 class="text-4xl font-black mb-4 tracking-tight text-center">Reconnect Type-C Cable</h3>
+                <p class="text-slate-600 mb-8 text-m text-center">Please try to <strong>gently unplug and plug</strong> in back the Type-C cable. Ensure it is <strong>firmly</strong> seated.</p>
+                <div class="flex gap-4">
+                    <button onclick="markResolved()" class="flex-1 bg-emerald-600 text-white py-4 rounded-xl font-bold">Detected!</button>
+                    <button onclick="showStep('ticket-onsite', 'mr-poly-purple')" class="flex-1 bg-slate-900 text-white py-4 rounded-xl font-bold">Still can't be detected</button>
+                </div>
+            </div>
+        </div>
+        <div id="ticket-onsite" class="hidden fade-in space-y-8">
+            <button onclick="goBack()" class="text-sm font-bold text-blue-900 flex items-center px-4 py-2 rounded-lg hover:bg-white transition-all w-fit">← Back</button>
+            <div class="text-center py-20 px-8 glass-card border-t-8 border-blue-500">
+                <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center text-4xl mx-auto mb-6 text-blue-600 shadow-inner">🔧</div>
+                <h3 class="text-4xl font-black mb-3 text-blue-600 text-center">Professional Help Needed</h3>
+                <p class="text-slate-500 mb-10 text-lg mx-auto font-medium max-w-xl text-center">Thank you for taking your time to troubleshoot. Let's get the OnSite IT Support Team to visit.</p>
+                <button onclick="openPortal('https://roche.service-now.com/siteservices?id=wsd_sc_cat_item&sys_id=1fba15a487f81258084f41140cbb3534')" class="inline-block bg-blue-600 text-white px-14 py-6 rounded-3xl font-black shadow-2xl hover:scale-105 transition-all text-xl uppercase">Raise IT Ticket</button>
+            </div>
+        </div>
+        <div id="ticket-ofm" class="hidden fade-in space-y-8">
+            <button onclick="goBack()" class="text-sm font-bold text-blue-900 flex items-center px-4 py-2 rounded-lg hover:bg-white transition-all w-fit">← Back</button>
+            <div class="text-center py-20 px-8 glass-card border-t-8 border-orange-500">
+                <div class="w-20 h-20 bg-orange-50 rounded-full flex items-center justify-center text-4xl mx-auto mb-6 text-orange-600 shadow-inner text-orange-600">⚡</div>
+                <h3 class="text-4xl font-black mb-3 text-orange-600 text-center">Power Issue Detected</h3>
+                <p class="text-slate-500 mb-10 text-lg mx-auto font-medium max-w-xl text-center">Thank you for taking your time to troubleshoot. Let's get the Facilities Team to visit.</p>
+                <button onclick="openPortal('https://roche.service-now.com/siteservices?id=wsd_sc_cat_item&sys_id=24d5f2b01bba709ce75541588b4bcb4c&sysparm_category=dd906a781bbe781879be1f4aab4bcb6b')" class="inline-block bg-orange-600 text-white px-14 py-6 rounded-3xl font-black shadow-2xl hover:scale-105 transition-all text-xl uppercase">Raise OFM Ticket</button>
+            </div>
+        </div>
+        <div id="solved" class="hidden fade-in text-center py-24 px-8 glass-card border-t-8 border-emerald-500">
+            <div class="w-24 h-24 bg-emerald-50 rounded-full flex items-center justify-center text-5xl mx-auto mb-8 animate-bounce shadow-inner">✅</div>
+            <h3 class="text-5xl font-black mb-4 text-emerald-700 tracking-tight text-center">Resolved!</h3>
+            <p class="text-xl text-slate-500 mb-12 font-medium italic text-center">Thank you for using the support hub.</p>
+            <button onclick="location.reload()" class="text-blue-600 font-black hover:underline text-lg">Back to HomePage</button>
+        </div>
+        <div id="extension-on-fail" class="hidden fade-in glass-card p-12 text-center max-w-2xl mx-auto">
+            <button onclick="goBack()" class="mb-4 text-blue-900 font-bold block w-fit">← Back</button>
+            <div class="mt-4 text-left">
+                <h3 class="text-4xl font-black mb-3 text-black-600 text-center">Loose Cable Check</h3>
+                <p class="text-slate-600 mb-8 font-medium text-sm text-center">Visually check if the cables at the back of the monitor or the docking are loose.</p>
+                <div class="flex gap-4">
+                    <button onclick="markResolved()" class="flex-1 bg-emerald-600 text-white py-5 rounded-2xl font-black">It's working!</button>
+                    <button onclick="showStep('ticket-onsite', 'extension-on-fail')" class="flex-1 bg-slate-800 text-white py-5 rounded-2xl font-black">Still dead</button>
+                </div>
+            </div>
+        </div>
+        <div id="extension-fix" class="hidden fade-in glass-card p-12 text-center max-w-2xl mx-auto">
+            <button onclick="goBack()" class="mb-4 text-blue-900 font-bold block w-fit">← Back</button>
+            <div class="mt-4 text-center">
+                <p class="text-4xl font-black tracking-tight mb-8">Switch flipped! Does everything turn on now?</p>
+                <div class="flex gap-4">
+                    <button onclick="markResolved()" class="flex-1 bg-emerald-600 text-white py-5 rounded-2xl font-black shadow-md">Yes</button>
+                    <button onclick="showStep('ticket-ofm', 'extension-fix', 'bg-warning')" class="flex-1 bg-red-50 text-red-600 py-5 rounded-2xl font-black border border-red-100 shadow-md">No</button>
+                </div>
+            </div>
+        </div>
+        <div id="no-display" class="hidden fade-in glass-card p-12 text-center max-w-2xl mx-auto">
+            <button onclick="goBack()" class="mb-4 text-blue-900 font-bold block w-fit">← Back</button>
+            <div class="mt-4 text-center">
+                <h3 class="text-4xl font-black tracking-tight mb-8 text-center">Quick Cable Check</h3>
+                <p class="text-slate-600 mb-8 font-medium leading-relaxed text-sm text-center">Visually check if the cables at the back of the monitor are loose. If they look fine but the screen is blank, click below.</p>
+                <button onclick="showStep('ticket-onsite', 'no-display')" class="w-full bg-slate-800 text-white py-5 rounded-2xl font-black">Still Inactive</button>
+            </div>
+        </div>
+        <div id="check-extension" class="hidden fade-in space-y-8 text-center max-w-2xl mx-auto">
+            <button onclick="goBack()" class="mb-4 text-blue-900 font-bold block w-fit">← Back</button>
+            <div class="glass-card p-12 mt-4 text-center">
+                <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-md text-[10px] font-black mb-4 uppercase tracking-tighter">Check Point 3</span>
+                <h3 class="text-4xl font-black tracking-tight mb-8 text-center">Check the Power Box</h3>
+                <div class="img-box w-64 h-64 mb-8 mx-auto flex items-center justify-center">
+                    <img src="power.jpg" class="max-w-full max-h-full object-contain">
+                </div>
+                <p class="text-slate-600 mb-6 font-medium leading-relaxed text-sm text-center">Look for the power extension box mounted under your desk. Ensure the small switch is turned <strong>ON</strong>.</p>
+                <div class="flex gap-4">
+                    <button onclick="showStep('extension-on-fail', 'check-extension')" class="flex-1 border-2 border-blue-900 py-4 font-bold rounded-xl text-center">It's already ON</button>
+                    <button onclick="showStep('extension-fix', 'check-extension', 'bg-troubleshoot')" class="flex-1 bg-blue-900 text-white py-4 font-bold rounded-xl text-center">It was OFF</button>
+                </div>
+            </div>
+        </div>
+        <div id="hard-reset" class="hidden fade-in glass-card p-12 max-w-2xl mx-auto text-center">
+            <button onclick="goBack()" class="mb-4 text-blue-900 font-bold block w-fit">← Back</button>
+            <div class="mt-4 text-center">
+                <h3 class="text-4xl font-bold mb-8 text-blue-600 tracking-tight text-center">The Quick Fix.</h3>
+                <p class="text-slate-600 mb-8 font-medium text-sm text-center">This is to check if the issue lies within the laptop or the type-c cable of the docking.</p>
+                <div class="space-y-4 mb-8">
+                    <p class="p-4 bg-slate-50 rounded-xl font-bold text-left">1. Unplug the main cable from your laptop.</p>
+                    <p class="p-4 bg-slate-50 rounded-xl font-bold text-left">2. Hold the laptop Power Button for 30 seconds.</p>
+                    <p class="p-4 bg-slate-50 rounded-xl font-bold text-left">3. Turn it back ON and plug the cable in.</p>
+                </div>
+                <div class="flex gap-4">
+                    <button onclick="markResolved()" class="flex-1 bg-emerald-600 text-white py-4 rounded-xl font-bold text-center">It worked!</button>
+                    <button onclick="showStep('ticket-onsite', 'hard-reset')" class="flex-1 bg-slate-100 py-4 rounded-xl font-bold text-center">Still nothing</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="text-center text-slate-400 text-[10px] font-black uppercase tracking-widest py-10">
+        <p>© 2026 Roche Site IT | Support Hub</p>
+    </footer>
+    <script>
+        let historyStack = [];
+        const homeBtn = document.getElementById('home-nav-btn');
+        function handleSearch(e) {
+            if (e.key === 'Enter') {
+                const val = e.target.value.toLowerCase();
+                if (val.includes('monitor') || val.includes('screen') || val.includes('off') || val.includes('help') || val.includes('troubleshoot') || val.includes('fix')) showStep('monitor-led-check', 'step-start', 'bg-troubleshoot');
+                else if (val.includes('charge') || val.includes('laptop') || val.includes('dock')) showStep('laptop-charging', 'step-start', 'bg-troubleshoot');
+                else if (val.includes('meeting room') || val.includes('tv') || val.includes('poly') || val.includes('meeting')) showStep('meeting-room', 'step-start', 'bg-troubleshoot');
+                else if (val.includes('signal') || val.includes('inactive')) showStep('no-display', 'step-start', 'bg-troubleshoot');
+                else alert('No matching topic found.');
+                e.target.value = '';
+            }
+        }
+
+let historystack = [];
+const homebtn = document.getElementById('home-nav-btn');
+function markResolved() {
+    let count = parseInt(localStorage.getItem('ticketsSaved') || 0);
+    count++; 
+    localStorage.setItem('ticketsSaved', count);
+    showStep('solved', '', 'bg-success');
+}
+        function openPortal(url) { window.open(url, '_blank'); }        
+            
+        function showStep(stepId, currentId, bgColor) {
+            const target = document.getElementById(stepId);
+            if (target) {
+                if (currentId) historyStack.push({id: currentId, bg: document.body.className.split(' ').pop() || 'bg-default'});
+                homeBtn.classList.toggle('hidden', stepId === 'step-start');
+                document.body.className = "text-slate-800 " + (bgColor || "bg-default");
+                document.querySelectorAll('main > div').forEach(div => div.classList.add('hidden'));
+                target.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+        function goBack() {
+            if (historystack.length > 0) {
+                const prev = historyStack.pop();
+                homeBtn.classList.toggle('hidden', prev.id === 'step-start');
+                document.body.className = "text-slate-800 " + (prev.bg || "bg-default");
+                document.querySelectorAll('main > div').forEach(div => div.classList.add('hidden'));
+                document.getElementById(prev.id).classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+    </script>
+</body>
+</html>
