@@ -298,7 +298,7 @@
             <button onclick="goBack()" class="mb-4 text-blue-900 font-bold block w-fit">← Back</button>
             <div class="glass-card p-12 mt-4 text-center">
                 <h3 class="text-4xl font-black mb-2 tracking-tight text-center">Google Meet Camera Check</h3>
-                <p class="text-slate-600 mb-8 text-m text-center">In Google Meet, ensure Camera is set to <strong>Polycom Studio Audio</strong>.</p>
+                <p class="text-slate-600 mb-8 text-m text-center">In Google Meet, ensure Camera is set to <strong>Polycom Studio Video</strong>.</p>
                 <div class="img-box w-60 h-68 mb-8 mx-auto flex items-center justify-center"><img src="cam-output.jpg" class="max-w-full max-h-full object-contain"></div>
                 <div class="flex gap-4 mt-8">
                     <button onclick="markResolved()" class="flex-1 bg-emerald-600 text-white py-4 rounded-xl font-bold text-center">Works!</button>
@@ -311,12 +311,12 @@
             <div class="glass-card p-12 mt-4">
                 <h3 class="text-4xl font-black mb-6 tracking-tight text-center">Polycom Light Status</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
-                    <button onclick="showStep('ticket-onsite', 'mr-poly-detect')" class="p-6 border-2 border-orange-200 rounded-3xl hover:bg-orange-50">
+                    <button onclick="showStep('mr-poly-yellow', 'mr-poly-detect')" class="p-6 border-2 border-orange-200 rounded-3xl hover:bg-orange-50">
                         <div class="img-box h-50 mb-4"><img src="mr-polycam(bfr).jpg" class="w-full h-full object-contain"></div>
                         <h4 class="font-bold text-orange-800">White / Orange</h4>
                         <p class="text-xs">This indicates that Poly has failed to start properly.</p>
                     </button>
-                    <button onclick="showStep('ticket-onsite', 'mr-poly-detect')" class="p-6 border-2 border-purple-200 rounded-3xl hover:bg-purple-50">
+                    <button onclick="showStep('mr-poly-purple', 'mr-poly-detect')" class="p-6 border-2 border-purple-200 rounded-3xl hover:bg-purple-50">
                         <div class="img-box h-50 mb-4"><img src="mr-polycam(aft).jpg" class="w-full h-full object-contain"></div>
                         <h4 class="font-bold text-purple-800">Purple / Blue</h4>
                         <p class="text-xs">This indicates that Poly has started successfully but it isn't detecting your device.</p>
@@ -324,6 +324,20 @@
                 </div>
             </div>
         </div>
+
+        <div id="mr-poly-yellow" class="hidden fade-in space-y-8 text-center max-w-2xl mx-auto">
+            <button onclick="goBack()" class="mb-4 text-blue-900 font-bold block w-fit">← Back</button>
+            <div class="glass-card p-12 mt-4">
+                <h3 class="text-4xl font-black mb-4 tracking-tight">Restart Device</h3>
+                <p class="text-slate-600 mb-8 text-m">Turn <strong>OFF</strong> all the switches behind the wall and turn it back <strong>ON</strong>. Wait for a while and retry. Does the light turn Purple/Blue?</p>
+                <div class="img-box w-64 h-64 mb-8 mx-auto flex items-center justify-center"><img src="mr-main switches.jpg" class="max-w-full max-h-full object-contain"></div>
+                <div class="flex gap-4">
+                    <button onclick="markResolved()" class="flex-1 bg-emerald-600 text-white py-4 rounded-xl font-bold">Yes, fixed!</button>
+                    <button onclick="showStep('ticket-onsite', 'mr-poly-yellow')" class="flex-1 bg-slate-900 text-white py-4 rounded-xl font-bold">Still failing</button>
+                </div>
+            </div>
+        </div>
+
         <div id="mr-poly-purple" class="hidden fade-in space-y-8 text-center max-w-2xl mx-auto text-left">
             <button onclick="goBack()" class="mb-4 text-blue-900 font-bold block w-fit">← Back</button>
             <div class="glass-card p-12 mt-4 text-center">
