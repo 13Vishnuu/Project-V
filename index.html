@@ -438,8 +438,6 @@
             }
         }
 
-let historystack = [];
-const homebtn = document.getElementById('home-nav-btn');
 function markResolved() {
     let count = parseInt(localStorage.getItem('ticketsSaved') || 0);
     count++; 
@@ -460,7 +458,7 @@ function markResolved() {
             }
         }
         function goBack() {
-            if (historystack.length > 0) {
+            if (historyStack.length > 0) {
                 const prev = historyStack.pop();
                 homeBtn.classList.toggle('hidden', prev.id === 'step-start');
                 document.body.className = "text-slate-800 " + (prev.bg || "bg-default");
