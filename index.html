@@ -59,7 +59,7 @@
                         <p class="text-slate-500 text-xl mb-20 font-medium max-w-2xl italic">Fast-track solutions for your workstation hardware.</p>
                         <h3 class="text-slate-10000 text-4xl font-extrabold tracking-tight fade-in">Welcome! What are the challenges you're facing today?</h3>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <button onclick="showStep('monitor-led-check', 'step-start', 'bg-troubleshoot')" class="nav-btn flex flex-col p-10 glass-card text-left group">
                             <div class="w-16 h-16 bg-blue-50 rounded-3xl flex items-center justify-center text-4xl mb-8 shadow-inner group-hover:scale-110 transition-transform">🖥️</div>
                             <h3 class="font-bold text-2xl text-slate-800 mb-2">Monitor is OFF</h3>
@@ -75,10 +75,15 @@
                             <h3 class="font-bold text-2xl text-slate-800 mb-2">No Signal</h3>
                             <p class="text-slate-500">Screen is on, but it says "Inactive".</p>
                         </button>
-                        <button onclick="showStep('meeting-room', 'step-start', 'bg-troubleshoot')" class="nav-btn flex flex-col p-10 glass-card text-left group border-2 border-blue-100">
+                        <button onclick="showStep('meeting-room', 'step-start', 'bg-troubleshoot')" class="nav-btn flex flex-col p-10 glass-card text-left group">
                             <div class="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center text-4xl mb-8 shadow-inner group-hover:scale-110 transition-transform">📺</div>
                             <h3 class="font-bold text-2xl text-slate-800 mb-2">Meeting Room</h3>
                             <p class="text-slate-500">TV/Display, Camera, or Audio/Mic issues.</p>
+                        </button>
+                        <button onclick="showStep('keyboard-reset', 'step-start', 'bg-troubleshoot')" class="nav-btn flex flex-col p-10 glass-card text-left group border-2 border-blue-100">
+                            <div class="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center text-4xl mb-8 shadow-inner group-hover:scale-110 transition-transform">⌨️</div>
+                            <h3 class="font-bold text-2xl text-slate-800 mb-2">Unresponsive Keyboard/Ports</h3>
+                            <p class="text-slate-500">Peripherals aren't working as intended.</p>
                         </button>
                     </div>
                 </div>
@@ -349,6 +354,34 @@
                 </div>
             </div>
         </div>
+
+        <div id="keyboard-reset" class="hidden fade-in space-y-8 text-center max-w-2xl mx-auto">
+            <button onclick="goBack()" class="mb-4 text-blue-900 font-bold block w-fit">← Back</button>
+            <div class="glass-card p-12 mt-4">
+                <h3 class="text-4xl font-black mb-4 tracking-tight text-center">Keyboard/Ports Fix</h3>
+                <p class="text-slate-600 mb-8 text-lg font-medium">Static issues can cause unresponsive peripherals. Please perform a power drain:</p>
+                <div class="space-y-4 mb-8">
+                    <p class="p-4 bg-slate-50 rounded-xl font-bold text-left">1. Unplug the main charging cable from your laptop.</p>
+                    <p class="p-4 bg-slate-50 rounded-xl font-bold text-left">2. Hold the laptop Power Button for 30 seconds.</p>
+                    <p class="p-4 bg-slate-50 rounded-xl font-bold text-left">3. Turn it back ON and test to verify.</p>
+                </div>
+                <div class="flex gap-4">
+                    <button onclick="markResolved()" class="flex-1 bg-emerald-600 text-white py-4 rounded-xl font-bold text-center">It worked!</button>
+                    <button onclick="showStep('ticket-servicedesk', 'keyboard-reset')" class="flex-1 bg-slate-900 text-white py-4 rounded-xl font-bold text-center">Still nothing</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="ticket-servicedesk" class="hidden fade-in space-y-8">
+            <button onclick="goBack()" class="text-sm font-bold text-blue-900 flex items-center px-4 py-2 rounded-lg hover:bg-white transition-all w-fit">← Back</button>
+            <div class="text-center py-20 px-8 glass-card border-t-8 border-indigo-500">
+                <div class="w-20 h-20 bg-indigo-50 rounded-full flex items-center justify-center text-4xl mx-auto mb-6 text-indigo-600 shadow-inner">🌐</div>
+                <h3 class="text-4xl font-black mb-3 text-indigo-700 text-center">Contact Service Desk</h3>
+                <p class="text-slate-500 mb-10 text-lg mx-auto font-medium max-w-xl text-center">Seems like a deeper technical issue. Let's get the Service Desk Team to assist you further.</p>
+                <button onclick="openPortal('https://roche.service-now.com/rose?id=nr_sc_cat_item&sys_id=8d8331d6db4b909009815408f4961979')" class="inline-block bg-indigo-600 text-white px-14 py-6 rounded-3xl font-black shadow-2xl hover:scale-105 transition-all text-xl uppercase tracking-tight">Raise Service Desk Ticket</button>
+            </div>
+        </div>
+
         <div id="ticket-onsite" class="hidden fade-in space-y-8">
             <button onclick="goBack()" class="text-sm font-bold text-blue-900 flex items-center px-4 py-2 rounded-lg hover:bg-white transition-all w-fit">← Back</button>
             <div class="text-center py-20 px-8 glass-card border-t-8 border-blue-500">
