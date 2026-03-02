@@ -70,7 +70,7 @@
                             <h3 class="font-bold text-2xl text-slate-800 mb-2">Laptop Not Charging</h3>
                             <p class="text-slate-500">Connected to the usb-c docking, but it is not charging.</p>
                         </button>
-                        <button onclick="showStep('no-display', 'step-start', 'bg-troubleshoot')" class="nav-btn flex flex-col p-10 glass-card text-left group border-2 border-black-100">
+                        <button onclick="showStep('no-signal-charge-check', 'step-start', 'bg-troubleshoot')" class="nav-btn flex flex-col p-10 glass-card text-left group border-2 border-black-100">
                             <div class="w-16 h-16 bg-purple-50 rounded-2xl flex items-center justify-center text-4xl mb-8 shadow-inner group-hover:scale-110 transition-transform">📡</div>
                             <h3 class="font-bold text-2xl text-slate-800 mb-2">No Signal</h3>
                             <p class="text-slate-500">Screen is on, but it says "Inactive".</p>
@@ -96,6 +96,114 @@
                         </div>
                         <div class="absolute -bottom-6 -right-6 text-white opacity-10 text-9xl font-black">?</div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="no-signal-charge-check" class="hidden fade-in space-y-8">
+            <button onclick="goBack()" class="text-sm font-bold text-blue-900 flex items-center px-4 py-2 rounded-lg hover:bg-white transition-all w-fit">← Back</button>
+            <div class="glass-card p-12 text-center max-w-2xl mx-auto">
+                <h3 class="text-4xl font-black mb-6">Check Charging Status</h3>
+                <p class="text-slate-600 mb-8 text-lg">Plug in your <strong>Type-C cable</strong>. Do you see the charging icon/symbol on your laptop screen?</p>
+                <div class="img-box w-64 h-64 mb-8 mx-auto flex items-center justify-center"><img src="dock-cable.jpg" class="max-w-full max-h-full object-contain"></div>
+                <div class="flex flex-col gap-4">
+                    <button onclick="markResolved()" class="bg-emerald-600 text-white py-4 rounded-xl font-bold">1. Yes, Charging & Signal OK</button>
+                    <button onclick="showStep('no-signal-faulty-cable', 'no-signal-charge-check')" class="bg-blue-600 text-white py-4 rounded-xl font-bold">2. Yes, Charging but No Signal</button>
+                    <button onclick="showStep('no-signal-dock-led', 'no-signal-charge-check')" class="bg-slate-900 text-white py-4 rounded-xl font-bold">3. No Charging Symbol & No Signal</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="no-signal-faulty-cable" class="hidden fade-in space-y-8">
+            <button onclick="goBack()" class="text-sm font-bold text-blue-900 flex items-center px-4 py-2 rounded-lg hover:bg-white transition-all w-fit">← Back</button>
+            <div class="text-center py-20 px-8 glass-card border-t-8 border-blue-500 max-w-2xl mx-auto">
+                <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center text-4xl mx-auto mb-6 text-blue-600">🔌</div>
+                <h3 class="text-4xl font-black mb-3 text-blue-600">Suspected Faulty Display Cable</h3>
+                <p class="text-slate-500 mb-10 text-lg mx-auto font-medium">Laptop has power but no display. Please raise an IT ticket for a cable replacement.</p>
+                <button onclick="openPortal('https://roche.service-now.com/siteservices?id=wsd_sc_cat_item&sys_id=1fba15a487f81258084f41140cbb3534')" class="inline-block bg-blue-600 text-white px-14 py-6 rounded-3xl font-black shadow-2xl hover:scale-105 transition-all text-xl uppercase">Raise IT Ticket</button>
+            </div>
+        </div>
+
+        <div id="no-signal-dock-led" class="hidden fade-in space-y-8">
+            <button onclick="goBack()" class="text-sm font-bold text-blue-900 flex items-center px-4 py-2 rounded-lg hover:bg-white transition-all w-fit">← Back</button>
+            <div class="glass-card p-12 text-center max-w-2xl mx-auto">
+                <h3 class="text-4xl font-black mb-6">Check Docking LED</h3>
+                <p class="text-slate-600 mb-8 text-lg">Look at the HP Docking station. Is the <strong>white LED power light</strong> on?</p>
+                <div class="img-box w-64 h-70 mb-8 mx-auto flex items-center justify-center"><img src="dock.jpg" class="max-w-full max-h-full object-contain"></div>
+                <div class="flex gap-4">
+                    <button onclick="showStep('ticket-onsite', 'no-signal-dock-led')" class="flex-1 bg-blue-600 text-white py-4 rounded-xl font-bold">LED is ON (Faulty Type-C Cable)</button>
+                    <button onclick="showStep('no-signal-monitor-logic', 'no-signal-dock-led')" class="flex-1 bg-slate-900 text-white py-4 rounded-xl font-bold">LED is OFF</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="no-signal-monitor-logic" class="hidden fade-in space-y-8">
+            <button onclick="goBack()" class="text-sm font-bold text-blue-900 flex items-center px-4 py-2 rounded-lg hover:bg-white transition-all w-fit">← Back</button>
+            <div class="glass-card p-12 text-center max-w-2xl mx-auto">
+                <h3 class="text-4xl font-black mb-6">Check Monitor LED</h3>
+                <p class="text-slate-600 mb-8 text-lg">Is the <strong>monitor LED light</strong> visible on the corner?</p>
+                <div class="img-box w-64 h-70 mb-8 mx-auto flex items-center justify-center"><img src="monitor-led.jpg" class="max-w-full max-h-full object-contain"></div>
+                <div class="flex gap-4">
+                    <button onclick="showStep('no-signal-led-on-cables', 'no-signal-monitor-logic')" class="flex-1 bg-blue-600 text-white py-4 rounded-xl font-bold">Monitor LED is ON</button>
+                    <button onclick="showStep('no-signal-led-off-button', 'no-signal-monitor-logic')" class="flex-1 bg-slate-900 text-white py-4 rounded-xl font-bold">Monitor LED is OFF</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="no-signal-led-on-cables" class="hidden fade-in space-y-8">
+            <button onclick="goBack()" class="text-sm font-bold text-blue-900 flex items-center px-4 py-2 rounded-lg hover:bg-white transition-all w-fit">← Back</button>
+            <div class="glass-card p-12 text-center max-w-2xl mx-auto">
+                <h3 class="text-4xl font-black mb-6">Check Connections</h3>
+                <p class="text-slate-600 mb-8 text-lg">Monitor has power but Docking doesn't. Verify <strong>cables behind docking</strong> and the <strong>Dock power plug</strong> in the socket are firm.</p>
+                <div class="img-box w-64 h-70 mb-8 mx-auto flex items-center justify-center"><img src="dock-cable.jpg" class="max-w-full max-h-full object-contain"></div>
+                <div class="flex gap-4">
+                    <button onclick="markResolved()" class="flex-1 bg-emerald-600 text-white py-4 rounded-xl font-bold">Fixed!</button>
+                    <button onclick="showStep('ticket-onsite', 'no-signal-led-on-cables')" class="flex-1 bg-slate-900 text-white py-4 rounded-xl font-bold">Still No power</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="no-signal-led-off-button" class="hidden fade-in space-y-8">
+            <button onclick="goBack()" class="text-sm font-bold text-blue-900 flex items-center px-4 py-2 rounded-lg hover:bg-white transition-all w-fit">← Back</button>
+            <div class="glass-card p-12 text-center max-w-2xl mx-auto">
+                <h3 class="text-4xl font-black mb-6">Try Power Button</h3>
+                <p class="text-slate-600 mb-8 text-lg">Click the power button <strong>right below the LED light</strong>. Does it turn on?</p>
+                <div class="img-box w-64 h-70 mb-8 mx-auto flex items-center justify-center"><img src="monitor-led.jpg" class="max-w-full max-h-full object-contain"></div>
+                <div class="flex gap-4">
+                    <button onclick="markResolved()" class="flex-1 bg-emerald-600 text-white py-4 rounded-xl font-bold">Yes, fixed!</button>
+                    <button onclick="showStep('no-signal-led-off-back', 'no-signal-led-off-button')" class="flex-1 bg-slate-900 text-white py-4 rounded-xl font-bold">No luck</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="no-signal-led-off-back" class="hidden fade-in space-y-8 text-left">
+            <button onclick="goBack()" class="text-sm font-bold text-blue-900 flex items-center px-4 py-2 rounded-lg hover:bg-white transition-all w-fit">← Back</button>
+            <div class="glass-card p-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="space-y-6">
+                    <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-md text-[10px] font-black mb-4 uppercase tracking-tighter">Check Point 2</span>
+                    <h3 class="text-4xl font-black tracking-tight">Check Monitor Switch</h3>
+                    <p class="text-slate-600 text-lg leading-relaxed">Reach behind the monitor for the <strong> switch</strong>. Ensure it's ON.</p>
+                    <div class="flex gap-4 pt-8 border-t border-slate-100">
+                        <button onclick="markResolved()" class="flex-1 bg-emerald-600 text-white py-5 rounded-2xl font-black shadow-lg hover:bg-emerald-700 transition-all text-lg">It's on now!</button>
+                        <button onclick="showStep('no-signal-led-off-table', 'no-signal-led-off-back')" class="flex-1 bg-slate-900 text-white py-5 rounded-2xl font-black hover:bg-slate-800 transition-all text-lg">Still off</button>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 h-80">
+                    <div class="img-box"><img src="monitor1.jpg" class="w-full h-full object-cover"></div>
+                    <div class="img-box"><img src="monitor2.jpg" class="w-full h-full object-cover"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="no-signal-led-off-table" class="hidden fade-in space-y-8 text-center max-w-2xl mx-auto">
+            <button onclick="goBack()" class="mb-4 text-blue-900 font-bold block w-fit">← Back</button>
+            <div class="glass-card p-12 mt-4">
+                <h3 class="text-4xl font-black mb-6 text-center">Check Table Box</h3>
+                <p class="text-slate-600 mb-8 text-lg text-center">Check the <strong>main power box</strong> under your desk. If switch is ON and still no power, raise OFM ticket.</p>
+                <div class="img-box w-64 h-70 mb-8 mx-auto flex items-center justify-center"><img src="power.jpg" class="max-w-full max-h-full object-contain"></div>
+                <div class="flex gap-4">
+                    <button onclick="markResolved()" class="flex-1 bg-emerald-600 text-white py-4 rounded-xl font-bold">Fixed!</button>
+                    <button onclick="showStep('ticket-ofm', 'no-signal-led-off-table')" class="flex-1 bg-orange-600 text-white py-4 rounded-xl font-bold">Raise OFM Ticket</button>
                 </div>
             </div>
         </div>
@@ -479,7 +587,7 @@
                 if (val.includes('monitor') || val.includes('screen') || val.includes('off') || val.includes('help') || val.includes('troubleshoot') || val.includes('fix')) showStep('monitor-led-check', 'step-start', 'bg-troubleshoot');
                 else if (val.includes('charge') || val.includes('laptop') || val.includes('dock')) showStep('laptop-charging', 'step-start', 'bg-troubleshoot');
                 else if (val.includes('meeting room') || val.includes('tv') || val.includes('poly') || val.includes('meeting')) showStep('meeting-room', 'step-start', 'bg-troubleshoot');
-                else if (val.includes('signal') || val.includes('inactive')) showStep('no-display', 'step-start', 'bg-troubleshoot');
+                else if (val.includes('signal') || val.includes('inactive')) showStep('no-signal-charge-check', 'step-start', 'bg-troubleshoot');
                 else alert('No matching topic found.');
                 e.target.value = '';
             }
